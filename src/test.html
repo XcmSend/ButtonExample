@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bagpipes button demo</title>
+    <script>
+
+
+
+
+const bagpipes_webhook = "https://webhook.bagpipes.io/f692b9b8-7ce2-49c0-b4b2-f45af6e781dc";
+
+
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function submitData() {
+    const inputData = document.getElementById("input-data").value.trim();
+
+            // Check if input data is not empty
+            if (inputData === "") {
+                alert("Please enter an address.");
+                return;
+            }
+
+            // Construct the JSON object to send
+            const jsonData = {
+                address: inputData
+                // Add more fields as needed
+            };
+    fetch(bagpipes_webhook, {
+        method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonData)
+    }).then(() => {
+        sleep(10000);
+        // Optional: Do something after the POST request succeeds, if needed
+        console.log('POST request successful');
+    }).catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+    </script>
+</head>
+<body>
+    <form id="data-form">
+        <label for="input-data">Search account balance for an account:</label>
+        <input type="text" placeholder="Enter address" id="input-data" name="input-data" required>
+        <button type="button" onclick="submitData()">Query</button>
+    </form>
+    <div id="result"></div>
+</body>
+</html>
+
+

@@ -3,7 +3,7 @@
 This is an example repo on how you can create a button that posts data to a bagpipes scenario and returns the response. In this example the user is querying a pallet on polkadot with an address as input. 
 
 ## Bagpipes scenario:
-![Bagpipes scenario](/bps.png)
+![Bagpipes scenario](/images/bps.png)
 
 
 ## Button: 

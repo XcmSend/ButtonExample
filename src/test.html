@@ -6,7 +6,7 @@
 
 
 
-
+// configure this url
 const bagpipes_webhook = "https://webhook.bagpipes.io/f692b9b8-7ce2-49c0-b4b2-f45af6e781dc";
 
 
@@ -14,10 +14,9 @@ const bagpipes_webhook = "https://webhook.bagpipes.io/f692b9b8-7ce2-49c0-b4b2-f4
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
 function submitData() {
-    const inputData = document.getElementById("input-data").value.trim();
-
+            const inputData = document.getElementById("input-data").value.trim();
+    console.log(`submitting data`);
             // Check if input data is not empty
             if (inputData === "") {
                 alert("Please enter an address.");
@@ -29,20 +28,50 @@ function submitData() {
                 address: inputData
                 // Add more fields as needed
             };
-    fetch(bagpipes_webhook, {
-        method: 'POST',
+            console.log(`making post request`)
+            // Step 1: Send POST request to bagpipes_webhook
+            fetch(bagpipes_webhook, {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(jsonData)
-    }).then(() => {
-        sleep(10000);
-        // Optional: Do something after the POST request succeeds, if needed
-        console.log('POST request successful');
-    }).catch(error => {
-        console.error('Error:', error);
-    });
-}
+            })
+            .then(response => {
+                console.log(`got response`)
+                if (!response.ok) {
+                    console.log(`error`)
+                    throw new Error('Network response was not ok');
+                }
+              //  return response.json();
+   
+                console.log('POST request successful');
+                // Step 2: Sleep for 15 seconds
+                console.log(`sleep`);
+                sleep(15000).finally(); // 15 seconds
+                console.log(`wake up`);
+                console.log(`i query now`);
+                // Step 3: Make GET request to another endpoint
+                return fetch(`https://flipchan.pythonanywhere.com/loot/yellow8`);
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log(`22`);
+                return response.json();
+            })
+            .then(result => {
+                // Step 4: Display result in HTML
+                console.log('GET request successful', result);
+                const formattedJson = JSON.stringify(result, null, 2); // Indent with 2 spaces
+                document.getElementById("result").innerHTML = `<pre>${formattedJson}</pre>`;
+     
+            })
+            .catch(error => {
+              //  console.error('Error:', error);
+            });
+        }
 
 
     </script>

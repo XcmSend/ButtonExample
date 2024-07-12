@@ -17,10 +17,10 @@ This is an example repo on how you can create a button that posts data to a bagp
 ![](/images/query.png)
 
 #### HTTP Node:   
-![](/images/http_node.png)
+![](/images/http_node.png)         
 Set the HTTP url, in this example we will use the example python app that can be found in the `src/` directory.  
 
-![](/images/http_node2.png)
+![](/images/http_node2.png)     
 Drag and drop the eventdata from the query result in the side toolbar.  
 
 Now we want to copy the webhook and http endpoint where we want our response to be sent and copy and paste it in our html file. 

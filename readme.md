@@ -39,3 +39,31 @@ View the result:
 ### Bagpipes template link:
 https://alpha.bagpipes.io/#/create/?diagramData=eQ2ZKuS-u 
 
+
+
+#### Python app:   
+Simple PoC app: 
+
+Post data:
+
+POST `/mempool/<uuid>`:
+```shell
+curl -X POST \
+   https://flipchan.pythonanywhere.com/mempool/blue123 \
+  -H 'Content-Type: application/json' \
+  -d '{
+        "requestContent": "{\"nonce\":\"10\",\"consumers\":\"0\",\"providers\":\"1\",\"sufficients\":\"0\",\"data\":{\"free\":\"10,033,245,663\",\"reserved\":\"0\",\"frozen\":\"0\",\"flags\":\"170,141,183,460,469,231,731,687,303,715,884,105,728\"},\"chainKey\":\"polkadot\",\"palletName\":\"System\",\"methodName\":\"Account\",\"params\":\"setme\",\"atBlock\":null}"
+      }'
+```
+
+
+
+
+GET `/loot/<uuid>`:   
+```shell 
+curl -X GET \
+  https://flipchan.pythonanywhere.com/loot/blue123
+```
+
+Download the data that was previously posted. 
+

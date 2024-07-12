@@ -7,13 +7,15 @@ This is an example repo on how you can create a button that posts data to a bagp
 
 
 ## Button: 
-![](/images/0.png)
-
+Display the html file:  
 ![](/images/1.png)
 
+Input an address:  
 ![](/images/2.png)
 
+View the result:   
 ![](/images/3.png)
+
 
 ### Bagpipes template link:
 https://alpha.bagpipes.io/#/create/?diagramData=eQ2ZKuS-u 

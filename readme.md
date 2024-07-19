@@ -67,3 +67,23 @@ curl -X GET \
 
 Download the data that was previously posted. 
 
+
+
+### With threadbag: 
+You can: 
+  - 1: Create a scenario with the main UI. 
+  - 2: Copy the link and save the scenario id (the unique identifier at the end of the link)   
+  - 3: Start the scenario with threadbag: 
+`curl -X POST -H "Content-Type: application/json" -d '{"id": "LSm-41cJY"}' http://th-0.bagpipes.io/job/start -v`
+   - 4: Send the accoundid32 public key with the threadbag_result.html file. 
+   - 5: Query threadbag for the result: 
+```shell
+curl -X POST -H "Content-Type: application/json" -d '{"id": "LSm-41cJY", "log_type": "query"}' https://th-0.bagpipes.io/scenario/get_filter_logs
+```
+   - 6: Display result to user 
+
+
+
+
+
+

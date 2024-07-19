@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bagpipes button demo</title>
+    <script>
+
+
+
+// configure this url
+const bagpipes_webhook = "https://webhook.bagpipes.io/da092421-6801-4e9c-86ad-888ec2475d3c";
+const scenario_id = "LSm-41cJY"
+
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+function submitData() {
+            const inputData = document.getElementById("input-data").value.trim();
+    console.log(`submitting data`);
+            // Check if input data is not empty
+            if (inputData === "") {
+                alert("Please enter an address.");
+                return;
+            }
+
+            // Construct the JSON object to send
+            const jsonData = {
+                address: inputData
+                // Add more fields as needed
+            };
+            console.log(`making post request`)
+            // Step 1: Send POST request to bagpipes_webhook
+            fetch(bagpipes_webhook, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(jsonData)
+            })
+            .then(response => {
+                console.log(`got response`)
+                if (!response.ok) {
+                    console.log(`error`)
+                    throw new Error('Network response was not ok');
+                }
+              //  return response.json();
+   
+                console.log('POST request successful');
+                // Step 2: Sleep for 15 seconds
+                console.log(`sleep`);
+                sleep(15000).finally(); // 15 seconds
+                console.log(`wake up`);
+                console.log(`i query now`);
+                // Step 3: Make GET request to another endpoint
+                return fetch(`https://flipchan.pythonanywhere.com/loot/yellow8`);
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                console.log(`22`);
+                return response.json();
+            })
+            .then(result => {
+                // Step 4: Display result in HTML
+                console.log('GET request successful', result);
+                const formattedJson = JSON.stringify(result, null, 2); // Indent with 2 spaces
+                document.getElementById("result").innerHTML = `<pre>${formattedJson}</pre>`;
+     
+            })
+            .catch(error => {
+              //  console.error('Error:', error);
+            });
+        }
+
+
+    </script>
+
+
+
+</head>
+<body>
+    
+    <form id="data-form">
+        <label for="input-data">Search account balance for an account:</label>
+        <input type="text" placeholder="Enter address" id="input-data" name="input-data" required>
+        <button type="button" onclick="submitData()">Query</button>
+    </form>
+    <div id="result"></div>
+    <label for="input-data">Data Result:</label>
+
+    <div id="data-result">
+        <!-- Results will be displayed here -->
+    </div>
+    
+    <script>
+        function fetchData() {
+            fetch('https://th-0.bagpipes.io/scenario/get_filter_logs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    id: scenario_id,
+                    log_type: 'query'
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Extracting the 'result' array from the response
+                const results = data.result;
+        
+                // Clear previous content
+                document.getElementById('data-result').innerHTML = '';
+        
+                // Loop through each result and append to the data container
+                results.forEach(result => {
+                    const parsedResult = JSON.parse(result);
+                    const dataDiv = document.createElement('div');
+                    dataDiv.textContent = JSON.stringify(parsedResult, null, 2);
+                    document.getElementById('data-result').appendChild(dataDiv);
+                });
+            })
+            .catch(error => console.error('Error fetching data:', error));
+        }
+        
+        // Initially fetch data
+        fetchData();
+        
+        // Fetch data every 2 seconds
+        setInterval(fetchData, 2000);
+        </script>
+        
+
+</body>
+
+</html>
+
+
